@@ -7,7 +7,7 @@
 class Stats
 {
     public:
-        Stats(int maxSample = 30, int sampleRate = 1000); 
+        Stats(int maxSamples = 30, int sampleRate = 1000); 
 
         void reset();
         void setPid(int pid);
