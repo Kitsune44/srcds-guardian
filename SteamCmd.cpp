@@ -164,7 +164,7 @@ void SteamCmd::checkServer() {
     }
 }
 
-void SteamCmd::initStats() {
-    stats = make_unique<Stats>();
+void SteamCmd::initStats(int maxSamples, int sampleRate) {
+    stats = std::make_unique<Stats>(maxSamples, sampleRate); 
     game = make_unique<GameClient>();
 }
