@@ -7,6 +7,7 @@ using namespace std;
 
 Stats::Stats(int samples, int rate) : maxSamples(samples), sampleRate(rate) {
     load.resize(maxSamples, 0);
+}
 
 void Stats::reset() {
     //SYSTEM_INFO sysInfo;
@@ -25,7 +26,7 @@ void Stats::reset() {
 
         memcpy(&lastSysCPU, &fsys, sizeof(FILETIME));
         memcpy(&lastUserCPU, &fuser, sizeof(FILETIME));
-    } 
+    }
 
     load.clear();
     load.resize(maxSamples, 0);
@@ -75,7 +76,6 @@ int Stats::getLoad() {
     const int avg = (int)ceil(accumulate(load.begin(), load.end(), 0) / load.size());
     return avg > 0 ? avg : 0;
 }
-
 
 int Stats::getMemory() {
     HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid);
