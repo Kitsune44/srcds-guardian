@@ -23,6 +23,6 @@ private:
 	//int numProcessors;
 	std::vector<int> load; // load sampling
 
-	static constexpr int samples = 20;
+	static constexpr int samples = 30;
 };
 
