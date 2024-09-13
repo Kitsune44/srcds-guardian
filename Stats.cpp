@@ -45,11 +45,18 @@ int Stats::getCpu() {
 
     memcpy(&sys, &fsys, sizeof(FILETIME));
     memcpy(&user, &fuser, sizeof(FILETIME));
-    percent = (double)(sys.QuadPart - lastSysCPU.QuadPart) +
-        (user.QuadPart - lastUserCPU.QuadPart);
-    percent /= (now.QuadPart - lastCPU.QuadPart);
-    percent *= 100;
+
+    double cpuTimeDiff = now.QuadPart - lastCPU.QuadPart;    
+    if (cpuTimeDiff > 0) {
+        percent = (double)(sys.QuadPart - lastSysCPU.QuadPart) +
+            (user.QuadPart - lastUserCPU.QuadPart);
+        percent /= cpuTimeDiff;
+        percent *= 100;
+    } else {
+        percent = 0;
+    }
     //percent /= numProcessors;
+    
     lastCPU = now;
     lastUserCPU = user;
     lastSysCPU = sys;
