@@ -20,7 +20,7 @@ class Stats
         ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
         FILETIME ftime, fsys, fuser;
         int pid;
-        int numProcessors;
+        //int numProcessors;
         int sampleRate; // [ms]
         int maxSamples;
         std::vector<int> load;
