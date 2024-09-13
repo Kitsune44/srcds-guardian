@@ -23,8 +23,8 @@ jobs:
       - name: Get version
         id: vars
         run: |
-          echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
-          echo "::set-output name=date_long::$(date +'%Y%m%d%H')"
+          echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "date_long=$(date +'%Y%m%d%H')" >> $GITHUB_OUTPUT
       - name: Set version
         run: |
           sed -i'' "s/dev/${{ steps.vars.outputs.sha_short }}/" version.h
