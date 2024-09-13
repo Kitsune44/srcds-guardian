@@ -28,7 +28,7 @@ void Stats::reset() {
     } 
 
     load.clear();
-    load.resize(samples, 0);
+    load.resize(maxSamples, 0);
 }
 
 void Stats::setPid(int processId) {
