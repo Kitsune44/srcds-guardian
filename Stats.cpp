@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Stats::Stats(int samples, int rate) : maxSamples(samples), sampleRate(rate) {
+Stats::Stats(int maxSamples, int sampleRate) : samples(maxSamples), rate(sampleRate) {
     load.resize(maxSamples, 0);
 }
 
@@ -62,7 +62,7 @@ int Stats::getCpu() {
     lastUserCPU = user;
     lastSysCPU = sys;
 
-    if (load.size() > maxSamples) load.erase(load.begin());
+    if (load.size() > samples) load.erase(load.begin());
     if (percent >= 0) {
         load.emplace_back(ceil(percent));
     } else {
