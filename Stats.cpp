@@ -25,6 +25,9 @@ void Stats::reset() {
 
     memcpy(&lastSysCPU, &fsys, sizeof(FILETIME));
     memcpy(&lastUserCPU, &fuser, sizeof(FILETIME));
+
+    load.clear();
+    load.resize(samples, 0);
 }
 
 
@@ -51,7 +54,6 @@ int Stats::getCpu() {
     lastUserCPU = user;
     lastSysCPU = sys;
 
-    constexpr int samples = 20;
     if (load.size() > samples) load.erase(load.begin());
     if (percent >= 0) load.emplace_back(ceil(percent));
 
