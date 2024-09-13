@@ -15,13 +15,16 @@ BOOL WINAPI ConsoleHandler(DWORD);
 
 using namespace std;
 
+int maxSamples = 30;
+int sampleRate = 1000; //[ms]
+
 unique_ptr<SteamCmd> steamcmd;
 bool running = true;
 bool monitoringRunning = true;
 
 void monitor() {
     cout << endl << "Starting monitor.." << endl;
-    steamcmd->initStats();
+    steamcmd->initStats(maxSamples, sampleRate);
     Sleep(1000);
     while (monitoringRunning) {      
         if (running) {
