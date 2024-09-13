@@ -10,12 +10,12 @@ void Stats::setPid(int processId) {
 }
 
 void Stats::reset() {
-    SYSTEM_INFO sysInfo;
-    FILETIME ftime, fsys, fuser;
-
-    GetSystemInfo(&sysInfo);
-    numProcessors = sysInfo.dwNumberOfProcessors;
-
+    //SYSTEM_INFO sysInfo;
+    //GetSystemInfo(&sysInfo);
+    //numProcessors = sysInfo.dwNumberOfProcessors;
+    lastSysCPU = {0};
+    lastUserCPU = {0};
+        
     GetSystemTimeAsFileTime(&ftime);
     memcpy(&lastCPU, &ftime, sizeof(FILETIME));
 
@@ -26,10 +26,7 @@ void Stats::reset() {
 
         memcpy(&lastSysCPU, &fsys, sizeof(FILETIME));
         memcpy(&lastUserCPU, &fuser, sizeof(FILETIME));
-    } else {
-        memset(&lastSysCPU, 0, sizeof(lastSysCPU));
-        memset(&lastUserCPU, 0, sizeof(lastUserCPU));
-    }
+    } 
 
     load.clear();
     load.resize(samples, 0);
@@ -37,29 +34,25 @@ void Stats::reset() {
 
 
 int Stats::getCpu() {
-    FILETIME ftime, fsys, fuser;
-    ULARGE_INTEGER now, sys, user;
+    ULARGE_INTEGER now, sys = {0}, user = {0};
     double percent;
 
     GetSystemTimeAsFileTime(&ftime);
     memcpy(&now, &ftime, sizeof(FILETIME));
 
     HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid);
-    GetProcessTimes(hProcess, &ftime, &ftime, &fsys, &fuser);
-    CloseHandle(hProcess);
+    if (hProcess != NULL) {
+        GetProcessTimes(hProcess, &ftime, &ftime, &fsys, &fuser);
+        CloseHandle(hProcess);
 
-    memcpy(&sys, &fsys, sizeof(FILETIME));
-    memcpy(&user, &fuser, sizeof(FILETIME));
-
-    double cpuTimeDiff = now.QuadPart - lastCPU.QuadPart;    
-    if (cpuTimeDiff > 0) {
-        percent = (double)(sys.QuadPart - lastSysCPU.QuadPart) +
-            (user.QuadPart - lastUserCPU.QuadPart);
-        percent /= cpuTimeDiff;
-        percent *= 100;
-    } else {
-        percent = 0;
+        memcpy(&sys, &fsys, sizeof(FILETIME));
+        memcpy(&user, &fuser, sizeof(FILETIME));
     }
+
+    percent = (double)(sys.QuadPart - lastSysCPU.QuadPart) +
+        (user.QuadPart - lastUserCPU.QuadPart);
+    percent /= now.QuadPart - lastCPU.QuadPart;
+    percent *= 100;
     //percent /= numProcessors;
     
     lastCPU = now;
