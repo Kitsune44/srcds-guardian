@@ -20,17 +20,12 @@ bool running = true;
 
 void monitor()
 {
-    Sleep(2000);
-    
-    if (running) {
+    while (running) {
+        Sleep(2000);
         steamcmd->checkServer();
+    }
 
-        thread th = thread(monitor);
-        th.detach();
-    }
-    else {
-        steamcmd->killProcess("exit requested by user");
-    }
+    steamcmd->killProcess("exit requested by user");
 }
 
 BOOL WINAPI HandlerRoutine(_In_ DWORD dwCtrlType) {
@@ -51,7 +46,7 @@ BOOL WINAPI HandlerRoutine(_In_ DWORD dwCtrlType) {
 int main(int argc, char** argv)
 {
     // start
-    cout << "Initializing Srcds-Guardian .." << endl;
+    cout << endl << "Initializing Srcds-Guardian .." << endl;
     cout << "Version: " << VERSION << " (" << __DATE__ << " " << __TIME__ ")" << endl;
 
     // set console handler
@@ -101,7 +96,7 @@ int main(int argc, char** argv)
     steamcmd->updateGame(appid, branch, true);
     steamcmd->cleanUp(appid);
 
-    cout << "Starting monitor.." << endl;
+    cout << endl << "Starting monitor.." << endl;
 
     steamcmd->initStats();
     thread th = thread(monitor);
@@ -114,12 +109,12 @@ int main(int argc, char** argv)
 
         steamcmd->startGame(appid, cmdline, port);
 
-        cout << "Server did exit." << endl;
+        cout << endl << "Server did exit." << endl;
 
         steamcmd->cleanUp(appid);
         
         if (running) {
-            cout << "Restarting server.." << endl;
+            cout << endl << "Restarting server.." << endl;
             Sleep(10000);
          
             steamcmd->updateGame(appid, branch);
