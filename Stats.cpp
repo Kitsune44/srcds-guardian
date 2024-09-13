@@ -69,6 +69,8 @@ int Stats::getCpu() {
     if (load.size() > samples) load.erase(load.begin());
     if (percent >= 0 && percent <= 100) {
         load.emplace_back(ceil(percent));
+    } else {
+        percent = 0;
     }
 
     return (int)round(percent);
