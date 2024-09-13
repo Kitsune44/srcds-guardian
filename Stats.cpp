@@ -5,8 +5,10 @@
 
 using namespace std;
 
-void Stats::setPid(int processId) {
-    pid = processId;
+void Stats::initStats(int samples, int rate) {
+    maxSamples = samples;
+    sampleRate = rate;    // [ms]
+    reset();
 }
 
 void Stats::reset() {
@@ -32,6 +34,9 @@ void Stats::reset() {
     load.resize(samples, 0);
 }
 
+void Stats::setPid(int processId) {
+    pid = processId;
+}
 
 int Stats::getCpu() {
     ULARGE_INTEGER now, sys = {0}, user = {0};
