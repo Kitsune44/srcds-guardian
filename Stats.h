@@ -7,7 +7,7 @@
 class Stats
 {
     public:
-        Stats(int samples = 30, int rate = 1000); 
+        Stats(int maxSample = 30, int sampleRate = 1000); 
 
         void reset();
         void setPid(int pid);
@@ -21,7 +21,7 @@ class Stats
         ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
         FILETIME ftime, fsys, fuser;
         int pid = -1;
-        int sampleRate; // [ms]
-        int maxSamples;
+        int samples;
+        int rate; // [ms]
         std::vector<int> load;
 };
