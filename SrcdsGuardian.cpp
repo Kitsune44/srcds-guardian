@@ -25,11 +25,11 @@ bool monitoringRunning = true;
 void monitor() {
     cout << endl << "Starting monitor.." << endl;
     steamcmd->initStats(maxSamples, sampleRate);
-    Sleep(1000);
+    Sleep(sampleRate);
     while (monitoringRunning) {      
         if (running) {
             steamcmd->checkServer();
-            Sleep(1000);
+            Sleep(sampleRate);
         } else {
             steamcmd->killProcess("exit requested by user");
             break;
@@ -117,6 +117,7 @@ int main(int argc, char** argv)
         steamcmd->startGame(appid, cmdline, port);
 
         monitoringRunning = false;
+        Sleep(1000);
         cout << endl << "Server did exit." << endl;
 
         steamcmd->cleanUp(appid);
