@@ -20,6 +20,8 @@ bool running = true;
 bool monitoringRunning = true;
 
 void monitor() {
+    cout << endl << "Starting monitor.." << endl;
+    steamcmd->initStats();
     Sleep(1000);
     while (monitoringRunning) {      
         if (running) {
@@ -105,9 +107,6 @@ int main(int argc, char** argv)
     // enter update loop
     while (running) {
         // Start monitor
-        cout << endl << "Starting monitor.." << endl;
-        steamcmd->initStats();
-
         monitoringRunning = true;
         thread th = thread(monitor);
         th.detach();
