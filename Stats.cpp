@@ -20,11 +20,16 @@ void Stats::reset() {
     memcpy(&lastCPU, &ftime, sizeof(FILETIME));
 
     HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, pid);
-    GetProcessTimes(hProcess, &ftime, &ftime, &fsys, &fuser);
-    CloseHandle(hProcess);
+    if (hProcess != NULL) {
+        GetProcessTimes(hProcess, &ftime, &ftime, &fsys, &fuser);
+        CloseHandle(hProcess);
 
-    memcpy(&lastSysCPU, &fsys, sizeof(FILETIME));
-    memcpy(&lastUserCPU, &fuser, sizeof(FILETIME));
+        memcpy(&lastSysCPU, &fsys, sizeof(FILETIME));
+        memcpy(&lastUserCPU, &fuser, sizeof(FILETIME));
+    } else {
+        memset(&lastSysCPU, 0, sizeof(lastSysCPU));
+        memset(&lastUserCPU, 0, sizeof(lastUserCPU));
+    }
 
     load.clear();
     load.resize(samples, 0);
