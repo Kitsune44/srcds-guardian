@@ -29,7 +29,7 @@ void Stats::reset() {
     }
 
     load.clear();
-    load.resize(maxSamples, 0);
+    load.resize(samples, 0);
 }
 
 void Stats::setPid(int processId) {
