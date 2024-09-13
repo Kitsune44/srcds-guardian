@@ -21,7 +21,7 @@ bool monitoringRunning = true;
 
 void monitor() {
     while (monitoringRunning) {
-        Sleep(2000);
+        Sleep(1000);
         
         if (running) {
             steamcmd->checkServer();
