@@ -17,15 +17,19 @@ using namespace std;
 
 unique_ptr<SteamCmd> steamcmd;
 bool running = true;
+bool monitoringRunning = true;
 
-void monitor()
-{
-    while (running) {
+void monitor() {
+    while (monitoringRunning) {
         Sleep(2000);
-        steamcmd->checkServer();
+        
+        if (running) {
+            steamcmd->checkServer();
+        } else {
+            steamcmd->killProcess("exit requested by user");
+            break;
+        }
     }
-
-    steamcmd->killProcess("exit requested by user");
 }
 
 BOOL WINAPI HandlerRoutine(_In_ DWORD dwCtrlType) {
@@ -100,23 +104,24 @@ int main(int argc, char** argv)
 
     // enter update loop
     while (running) {
-
+        // Start monitor
         cout << endl << "Starting monitor.." << endl;
         steamcmd->initStats();
+
+        monitoringRunning = true;
         thread th = thread(monitor);
         th.detach();
-        
+
         steamcmd->startGame(appid, cmdline, port);
-        running = false;
+
+        monitoringRunning = false;
         cout << endl << "Server did exit." << endl;
 
         steamcmd->cleanUp(appid);
-        running = true;
-        
+
         if (running) {
             cout << endl << "Restarting server.." << endl;
             Sleep(10000);
-         
             steamcmd->updateGame(appid, branch);
         }
     }
