@@ -18,6 +18,7 @@ class Stats
     
     private:
         ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
+        FILETIME ftime, fsys, fuser;
         int pid;
         int numProcessors;
         int sampleRate; // [ms]
