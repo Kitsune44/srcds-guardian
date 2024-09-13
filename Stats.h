@@ -6,21 +6,21 @@
 #pragma once
 class Stats
 {
-public:
-    void initStats(int samples, int rate);
-    void setPid(int pid);
-    void reset();
-    int getMemory();
-    int getMemorySelf();
-    int getCpu();
-    int getLoad();
-    int getNumSamples();
-
-private:
-    ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
-    int pid;
-    int numProcessors;
-    int sampleRate; // [ms]
-    int maxSamples;
-    std::vector<int> load;
+    public:
+        void initStats(int samples, int rate);
+        void reset();
+        void setPid(int pid);
+        int getCpu();
+        int getLoad();
+        int getMemory();
+        int getMemorySelf();
+        int getNumSamples();
+    
+    private:
+        ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
+        int pid;
+        int numProcessors;
+        int sampleRate; // [ms]
+        int maxSamples;
+        std::vector<int> load;
 };
