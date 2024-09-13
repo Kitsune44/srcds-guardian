@@ -96,22 +96,22 @@ int main(int argc, char** argv)
     steamcmd->updateGame(appid, branch, true);
     steamcmd->cleanUp(appid);
 
-    cout << endl << "Starting monitor.." << endl;
-
-    steamcmd->initStats();
-    thread th = thread(monitor);
-    th.detach();
-
     cout << "Entering startup loop.." << endl;
 
     // enter update loop
     while (running) {
 
+        cout << endl << "Starting monitor.." << endl;
+        steamcmd->initStats();
+        thread th = thread(monitor);
+        th.detach();
+        
         steamcmd->startGame(appid, cmdline, port);
-
+        running = false;
         cout << endl << "Server did exit." << endl;
 
         steamcmd->cleanUp(appid);
+        running = true;
         
         if (running) {
             cout << endl << "Restarting server.." << endl;
