@@ -11,7 +11,7 @@ using namespace std;
 class SteamCmd
 {
 public:
-	void initStats();
+	void initStats(int maxSamples, int sampleRate);
 	void install();
 	void chdir();
 	void updateGame(int appid, string branch, bool validate = false);
