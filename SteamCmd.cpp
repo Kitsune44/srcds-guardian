@@ -160,7 +160,7 @@ void SteamCmd::checkServer() {
         const std::string msg(format("monitor: pid [{}], players [{}/{}], memory [{} MB], cpu [{}%], load [{}%]",
             pid, game->GetCurPlayers(), game->GetMaxPlayers(), memory, cpu, load));
 
-        cout << "\r" << std::setw(80) << std::left << msg << std::flush;
+        cout << "\r" << std::setw(82) << std::left << msg << std::flush;
     }
 }
 
