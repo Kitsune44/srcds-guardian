@@ -5,11 +5,8 @@
 
 using namespace std;
 
-void Stats::initStats(int samples, int rate) {
-    maxSamples = samples;
-    sampleRate = rate;    // [ms]
-    reset();
-}
+Stats::Stats(int samples, int rate) : maxSamples(samples), sampleRate(rate) {
+    load.resize(maxSamples, 0);
 
 void Stats::reset() {
     //SYSTEM_INFO sysInfo;
