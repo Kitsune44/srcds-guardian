@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include <direct.h>
 #include <string>
 #include <format>
@@ -159,7 +160,7 @@ void SteamCmd::checkServer() {
         const std::string msg(format("monitor: pid [{}], players [{}/{}], memory [{} MB], cpu [{}%], load [{}%]",
             pid, game->GetCurPlayers(), game->GetMaxPlayers(), memory, cpu, load));
 
-        cout << msg << endl;
+        cout << "\r" << std::setw(80) << std::left << msg << std::flush;
     }
 }
 
