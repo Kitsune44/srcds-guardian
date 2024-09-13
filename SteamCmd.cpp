@@ -118,7 +118,7 @@ void SteamCmd::startGame(int appid, string cmdline, int gamePort) {
 }
 
 void SteamCmd::cleanUp(int appid) {
-    cout << "Cleanup old crashdumps.." << endl;
+    cout << endl << "Cleanup old crashdumps.." << endl;
     
     const string cmdCleanupCrashdumps(format("powershell.exe -Command \"Get-ChildItem -Path {} -File -Recurse -Include '*.mdmp' | Where{{$_.CreationTime -lt (Get-Date).AddDays(-7)}} | Remove-Item -Force\"", appid));
     system(cmdCleanupCrashdumps.c_str());
