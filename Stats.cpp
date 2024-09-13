@@ -40,7 +40,7 @@ void Stats::setPid(int processId) {
 
 int Stats::getCpu() {
     ULARGE_INTEGER now, sys = {0}, user = {0};
-    double percent;
+    double percent = 0.0;
 
     GetSystemTimeAsFileTime(&ftime);
     memcpy(&now, &ftime, sizeof(FILETIME));
@@ -64,8 +64,8 @@ int Stats::getCpu() {
     lastUserCPU = user;
     lastSysCPU = sys;
 
-    if (load.size() > samples) load.erase(load.begin());
-    if (percent >= 0 && percent <= 100) {
+    if (load.size() > maxSamples) load.erase(load.begin());
+    if (percent >= 0) {
         load.emplace_back(ceil(percent));
     } else {
         percent = 0;
