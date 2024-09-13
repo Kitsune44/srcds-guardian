@@ -37,7 +37,7 @@ jobs:
         run: |
           MSBuild.exe SrcdsGuardian.vcxproj -property:Configuration=Release
       - name: Store release
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: srcds-guardian
           path: |
