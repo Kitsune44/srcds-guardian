@@ -20,11 +20,11 @@ bool running = true;
 bool monitoringRunning = true;
 
 void monitor() {
-    while (monitoringRunning) {
-        Sleep(1000);
-        
+    Sleep(1000);
+    while (monitoringRunning) {      
         if (running) {
             steamcmd->checkServer();
+            Sleep(1000);
         } else {
             steamcmd->killProcess("exit requested by user");
             break;
