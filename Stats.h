@@ -7,22 +7,20 @@
 class Stats
 {
 public:
-	void initStats();
-	void setPid(int pid);
-	void reset();
-	int getMemory();
-	int getMemorySelf();
-	int getCpu();
-	int getLoad();
-	int getNumSamples();
+    void initStats(int samples, int rate);
+    void setPid(int pid);
+    void reset();
+    int getMemory();
+    int getMemorySelf();
+    int getCpu();
+    int getLoad();
+    int getNumSamples();
 
 private:
-	ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
-    	FILETIME ftime, fsys, fuser;
-	int pid;
-	//int numProcessors;
-	std::vector<int> load; // load sampling
-
-	static constexpr int samples = 30;
+    ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
+    int pid;
+    int numProcessors;
+    int sampleRate; // [ms]
+    int maxSamples;
+    std::vector<int> load;
 };
-
