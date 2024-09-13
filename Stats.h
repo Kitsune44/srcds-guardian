@@ -18,8 +18,9 @@ public:
 
 private:
 	ULARGE_INTEGER lastCPU, lastSysCPU, lastUserCPU;
+    	FILETIME ftime, fsys, fuser;
 	int pid;
-	int numProcessors;
+	//int numProcessors;
 	std::vector<int> load; // load sampling
 
 	static constexpr int samples = 20;
