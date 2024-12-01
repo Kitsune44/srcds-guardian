@@ -56,11 +56,11 @@ void SteamCmd::updateGame(int appid, string branch, bool validate) {
     // if beta given
     std::string beta = "";
     if (strcmp(branch.c_str(), "none") != 0) {
-        beta = "-beta " + branch;
+        beta = " -beta " + branch;
     }
 
     // verify files
-    std::string verify = validate ? "validate" : "";
+    std::string verify = validate ? " validate" : "";
 
     // as:rd workaround
     std::string prefix = "";
@@ -71,7 +71,7 @@ void SteamCmd::updateGame(int appid, string branch, bool validate) {
     }
 
     // install using appid
-    const string cmdUpdate(format("steamcmd.exe +force_install_dir {0} +login anonymous +app_update {1} {2} {3} {4} +quit", folder, prefix, appid, beta, verify));
+    const string cmdUpdate(format("steamcmd.exe +force_install_dir {0} +login anonymous +app_update {1}{2}{3}{4} +quit", folder, prefix, appid, beta, verify));
     cout << "Executing: " << cmdUpdate << endl;
 
     system(cmdUpdate.c_str());
